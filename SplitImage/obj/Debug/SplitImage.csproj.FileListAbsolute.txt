@@ -1,0 +1,9 @@
+D:\DATAs\HOCHANH\NhapMonPhatTrienGame\SplitImage\SplitImage\bin\Debug\SplitImage.exe.config
+D:\DATAs\HOCHANH\NhapMonPhatTrienGame\SplitImage\SplitImage\bin\Debug\SplitImage.exe
+D:\DATAs\HOCHANH\NhapMonPhatTrienGame\SplitImage\SplitImage\bin\Debug\SplitImage.pdb
+D:\DATAs\HOCHANH\NhapMonPhatTrienGame\SplitImage\SplitImage\obj\Debug\SplitImage.csprojAssemblyReference.cache
+D:\DATAs\HOCHANH\NhapMonPhatTrienGame\SplitImage\SplitImage\obj\Debug\SplitImage.form_SplitImage.resources
+D:\DATAs\HOCHANH\NhapMonPhatTrienGame\SplitImage\SplitImage\obj\Debug\SplitImage.Properties.Resources.resources
+D:\DATAs\HOCHANH\NhapMonPhatTrienGame\SplitImage\SplitImage\obj\Debug\SplitImage.csproj.GenerateResource.cache
+D:\DATAs\HOCHANH\NhapMonPhatTrienGame\SplitImage\SplitImage\obj\Debug\SplitImage.exe
+D:\DATAs\HOCHANH\NhapMonPhatTrienGame\SplitImage\SplitImage\obj\Debug\SplitImage.pdb
