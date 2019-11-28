@@ -153,21 +153,29 @@ namespace SplitImage
                 {
                     if (i != 0)
                     {
-                    writer.Write("\n");
+                        writer.Write("\n");
                     }
                     for (int j = 0; j < big_image_columns; j++)
                     {
                         Rectangle section = new Rectangle(new Point(j * cell_size, i * cell_size), new Size(cell_size, cell_size));
                         Cell cell = new Cell();
                         cell.cell_Bitmap = CropImage(mainImage, section);
-                        cell.ID = count_num;
-                        cell.count = 1;
+
+                        if (CompareImage(cell.cell_Bitmap, new Bitmap(cell_size, cell_size)))
+                            cell.ID = 0;
+                        else  
+                            cell.ID = count_num;
+
+                        cell.count = 1;//bỏ đê
 
                         bool similar = false;
                         if (cellTotal == 0)
                         {
                             listCell.Add(cell);
+                            writer.Write(cell.ID.ToString() + " ");
                             cellTotal += 1;
+                            if (!CompareImage(cell.cell_Bitmap, new Bitmap(cell_size, cell_size)))
+                                count_num += 1;
                         }
                         else
                         {
@@ -189,7 +197,6 @@ namespace SplitImage
                                 cellTotal += 1;
                                 lb_caution.Text = "Đang ghi file... (@_@) " + (((float)cellTotal / (big_image_columns * big_image_rows)) * 100) + "%";
                                 lb_caution.Refresh();
-                                continue;
                             }
                             else
                             {
@@ -236,10 +243,21 @@ namespace SplitImage
                     }
 
                 map_bitmap.Save(str_FolderDes + "\\" + "tile_map.png");
+
+                //Them header
+                lb_caution.Text = "Reformat...";
+                lb_caution.Refresh();
+
+                string data = File.ReadAllText(str_FolderDes + "\\" + "tile_map.txt");
+                string header_data = big_image_rows + " " + big_image_columns + "\n" + data;
+
+                File.WriteAllText(str_FolderDes + "\\" + "tile_map.txt", String.Empty);
+                File.WriteAllText(str_FolderDes + "\\" + "tile_map.txt", header_data);
                 //Bỏ qua các sự kiện khi bt_Export disable;
                 Application.DoEvents();
                 bt_Export.Enabled = true;
                 Console.WriteLine(count_num);
+
                 lb_caution.Text = "Xong!";
             }
             catch

@@ -87,9 +87,9 @@
             this.lb_soHang.ForeColor = System.Drawing.Color.White;
             this.lb_soHang.Location = new System.Drawing.Point(71, 171);
             this.lb_soHang.Name = "lb_soHang";
-            this.lb_soHang.Size = new System.Drawing.Size(90, 13);
+            this.lb_soHang.Size = new System.Drawing.Size(101, 13);
             this.lb_soHang.TabIndex = 5;
-            this.lb_soHang.Text = "Số hàng của Grid";
+            this.lb_soHang.Text = "Số hàng của tile set";
             // 
             // lb_textDuongdan
             // 
