@@ -157,7 +157,7 @@ namespace SplitImage
                     }
                     for (int j = 0; j < big_image_columns; j++)
                     {
-                        Rectangle section = new Rectangle(new Point(i * cell_size, j * cell_size), new Size(cell_size, cell_size));
+                        Rectangle section = new Rectangle(new Point(j * cell_size, i * cell_size), new Size(cell_size, cell_size));
                         Cell cell = new Cell();
                         cell.cell_Bitmap = CropImage(mainImage, section);
                         cell.ID = count_num;
