@@ -216,21 +216,22 @@ namespace SplitImage
                 ///Nhiệm vụ tạo sprite tile map
                 //Dán hình vào bitmap lớn///////
                 //Định nghĩa cột hàng của tile map
-                var grid_columns = cellTotal / num_rows;
+                var grid_columns = listCell.Count / num_rows;
                 var grid_rows = num_rows;
                 //Tạo bitmap thể hiện cũa tileSet
                 Bitmap map_bitmap = new Bitmap(cell_size * grid_columns, cell_size * grid_rows);
                 Graphics g = Graphics.FromImage(map_bitmap);
                 //vòng lặp thứ hai ghi ảnh bitmap từng cell lên bitmap lớn
                 var count_nember = 0;
-                for(int i = 0; i < grid_rows; i++)
-                    for (int j = 0; j  < grid_columns; j++)
+                for(int i = 0; i <= grid_rows; i++)
+                    for (int j = 0; j  <= grid_columns; j++)
                     {
                         if (count_nember >= listCell.Count)
                             break;
 
                         g.DrawImage(listCell[count_nember].cell_Bitmap, new Point(j * cell_size, i * cell_size));
                         lb_caution.Text = "Đang vẽ hình... (!_!) " + (((float)count_nember / listCell.Count) * 100) + "%";
+                        lb_caution.Refresh();
                         count_nember += 1;
                     }
 
@@ -238,12 +239,14 @@ namespace SplitImage
                 //Bỏ qua các sự kiện khi bt_Export disable;
                 Application.DoEvents();
                 bt_Export.Enabled = true;
+                Console.WriteLine(count_num);
                 lb_caution.Text = "Xong!";
             }
             catch
             {
                 lb_caution.ForeColor = Color.DarkRed;
                 lb_caution.Text = "Có lỗi xảy ra! Kiểm tra lại input. Lưu ý: Không được chọn thư mục đích trong ổ hệ thống! Không nhập kích thước cell lớn hơn ảnh hay số dòng không hợp lệ!";
+                return;
             }
         }
 
