@@ -1,0 +1,9 @@
+D:\GitHubRepos\17520720\Map-to-TileSet\SplitImage\bin\Release\SplitImage.exe.config
+D:\GitHubRepos\17520720\Map-to-TileSet\SplitImage\bin\Release\SplitImage.exe
+D:\GitHubRepos\17520720\Map-to-TileSet\SplitImage\bin\Release\SplitImage.pdb
+D:\GitHubRepos\17520720\Map-to-TileSet\SplitImage\obj\Release\SplitImage.csprojAssemblyReference.cache
+D:\GitHubRepos\17520720\Map-to-TileSet\SplitImage\obj\Release\SplitImage.form_SplitImage.resources
+D:\GitHubRepos\17520720\Map-to-TileSet\SplitImage\obj\Release\SplitImage.Properties.Resources.resources
+D:\GitHubRepos\17520720\Map-to-TileSet\SplitImage\obj\Release\SplitImage.csproj.GenerateResource.cache
+D:\GitHubRepos\17520720\Map-to-TileSet\SplitImage\obj\Release\SplitImage.exe
+D:\GitHubRepos\17520720\Map-to-TileSet\SplitImage\obj\Release\SplitImage.pdb
