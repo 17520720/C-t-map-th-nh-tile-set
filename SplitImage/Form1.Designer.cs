@@ -42,6 +42,8 @@
             this.bt_ChooseFolder = new System.Windows.Forms.Button();
             this.bt_Export = new System.Windows.Forms.Button();
             this.lb_caution = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.music_state = new System.Windows.Forms.Label();
             this.gb_Infor.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -175,6 +177,26 @@
             this.lb_caution.Size = new System.Drawing.Size(0, 13);
             this.lb_caution.TabIndex = 10;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "label2";
+            // 
+            // music_state
+            // 
+            this.music_state.AutoSize = true;
+            this.music_state.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.music_state.Location = new System.Drawing.Point(741, 428);
+            this.music_state.Name = "music_state";
+            this.music_state.Size = new System.Drawing.Size(35, 13);
+            this.music_state.TabIndex = 12;
+            this.music_state.Text = "label3";
+            this.music_state.Click += new System.EventHandler(this.music_state_Click);
+            // 
             // form_SplitImage
             // 
             this.AcceptButton = this.bt_Export;
@@ -182,6 +204,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.music_state);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.lb_caution);
             this.Controls.Add(this.bt_Export);
             this.Controls.Add(this.gb_Infor);
@@ -212,6 +236,8 @@
         private System.Windows.Forms.TextBox tb_FileName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lb_caution;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label music_state;
     }
 }
 

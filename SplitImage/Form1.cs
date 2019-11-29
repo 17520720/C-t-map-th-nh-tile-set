@@ -22,6 +22,7 @@ namespace SplitImage
     {
         private string str_ImageSources;
         private string str_FolderDes;
+        SoundPlayer sound = new SoundPlayer();
 
         public form_SplitImage()
         {
@@ -36,6 +37,9 @@ namespace SplitImage
             tb__CellSize.ShortcutsEnabled = false;
             tb_numRows.ShortcutsEnabled = false;
 
+            sound.SoundLocation = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "..\\.." + "\\closetothesun.wav"));
+
+            music_state.Text = "Tắt nhạc";
             playMusicBg();
         }
 
@@ -144,20 +148,20 @@ namespace SplitImage
                 FileStream fileStream = new FileStream(str_FolderDes + "\\" + "tile_map.txt", FileMode.OpenOrCreate, FileAccess.Write);
                 StreamWriter writer = new StreamWriter(fileStream);
             
-                lb_caution.ForeColor = Color.Aqua;
+                lb_caution.ForeColor = Color.Green;
 
                 bt_Export.Enabled = false;
             
 
-                for (int i = 0; i < big_image_rows; i++)
+                for (int i = 0; i < big_image_height; i = i + cell_size)
                 {
                     if (i != 0)
                     {
                         writer.Write("\n");
                     }
-                    for (int j = 0; j < big_image_columns; j++)
+                    for (int j = 0; j < big_image_width; j = j + cell_size)
                     {
-                        Rectangle section = new Rectangle(new Point(j * cell_size, i * cell_size), new Size(cell_size, cell_size));
+                        Rectangle section = new Rectangle(new Point(j , i), new Size(cell_size, cell_size));
                         Cell cell = new Cell();
                         cell.cell_Bitmap = CropImage(mainImage, section);
 
@@ -165,8 +169,6 @@ namespace SplitImage
                             cell.ID = 0;
                         else  
                             cell.ID = count_num;
-
-                        cell.count = 1;//bỏ đê
 
                         bool similar = false;
                         if (cellTotal == 0)
@@ -223,7 +225,7 @@ namespace SplitImage
                 ///Nhiệm vụ tạo sprite tile map
                 //Dán hình vào bitmap lớn///////
                 //Định nghĩa cột hàng của tile map
-                var grid_columns = listCell.Count / num_rows;
+                var grid_columns = listCell.Count / num_rows + 1;
                 var grid_rows = num_rows;
                 //Tạo bitmap thể hiện cũa tileSet
                 Bitmap map_bitmap = new Bitmap(cell_size * grid_columns, cell_size * grid_rows);
@@ -231,7 +233,7 @@ namespace SplitImage
                 //vòng lặp thứ hai ghi ảnh bitmap từng cell lên bitmap lớn
                 var count_nember = 0;
                 for(int i = 0; i <= grid_rows; i++)
-                    for (int j = 0; j  <= grid_columns; j++)
+                    for (int j = 0; j  < grid_columns; j++)
                     {
                         if (count_nember >= listCell.Count)
                             break;
@@ -256,7 +258,7 @@ namespace SplitImage
                 //Bỏ qua các sự kiện khi bt_Export disable;
                 Application.DoEvents();
                 bt_Export.Enabled = true;
-                Console.WriteLine(count_num);
+                Console.WriteLine(listCell.Count);
 
                 lb_caution.Text = "Xong!";
             }
@@ -314,13 +316,25 @@ namespace SplitImage
         {
             try
             {
-                SoundPlayer sound = new SoundPlayer();
-                sound.SoundLocation = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "..\\.." + "\\closetothesun.wav"));
                 Console.WriteLine(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "..\\.." + "\\closetothesun.wav")));
                 Console.WriteLine(Environment.CurrentDirectory);
                 sound.PlayLooping();
             }
             catch { }
-        }         
+        }
+
+        private void music_state_Click(object sender, EventArgs e)
+        {
+            if (music_state.Text == "Tắt nhạc")
+            {
+                sound.Stop();
+                music_state.Text = "Bật nhạc";
+            }
+            else if (music_state.Text == "Bật nhạc")
+            {
+                sound.PlayLooping();
+                music_state.Text = "Tắt nhạc";
+            }
+        }
     }
 }
