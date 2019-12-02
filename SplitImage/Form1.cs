@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Đừng tắt bật nhạc trong khi vẽ hình
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,8 +16,6 @@ namespace SplitImage
 {
     struct Cell {
         public int ID;
-        public int row, column;
-        public int count;
         public Bitmap cell_Bitmap;
     }
     public partial class form_SplitImage : Form
@@ -32,6 +32,7 @@ namespace SplitImage
 
         private void form_SplitImage_Load(object sender, EventArgs e)
         {
+            //button
             gb_Infor.Location = new Point(this.Width / 2 - gb_Infor.Width / 2, this.Height / 2 - gb_Infor.Height / 2 - 20);
             bt_Export.Location = new Point(gb_Infor.Location.X + gb_Infor.Width / 2 - bt_Export.Width / 2, gb_Infor.Location.Y + gb_Infor.Height - bt_Export.Height / 2);
             tb__CellSize.ShortcutsEnabled = false;
@@ -72,13 +73,6 @@ namespace SplitImage
                 tb_FileName.Text = openFileDialog.SafeFileName;
                 str_ImageSources = openFileDialog.FileName;
             }
-        }
-
-        private string GetFilePath(string stringFile)
-        {
-            string filePath = stringFile.Replace("\\", "\\\\");
-            //MessageBox.Show(filePath);
-            return filePath;
         }
 
         private void bt_ChooseFolder_Click(object sender, EventArgs e)
@@ -137,8 +131,6 @@ namespace SplitImage
             int count_num = 1;
             int cellTotal = 0;
 
-            Bitmap outputImage;
-
             //Tạo file text cho grid map
             //Nhiệm vụ ưu tiên là ghi lên file
             // CreateFileText(str_FolderDes + "\\" + "tile_map.txt");
@@ -185,16 +177,14 @@ namespace SplitImage
                             {
                                 if (CompareImage(cell.cell_Bitmap, listCell[k].cell_Bitmap))
                                 {
-                                    writer.Write(listCell[k].ID.ToString() + " ");
-                                    //File.WriteAllText(str_FolderDes + "\\" + "tile_map.txt", listCell[k].ID.ToString());
+                                    writer.Write(listCell[k].ID.ToString() + " ");//ghi ID trùng vào file text
                                     similar = true;
-                                    //MessageBox.Show("Trung roi");
                                     Console.WriteLine(listCell[k].ID.ToString());
                                     break;
                                 }
                             }
 
-                            if (similar)
+                            if (similar)//nếu giống nhau
                             {
                                 cellTotal += 1;
                                 lb_caution.Text = "Đang ghi file... (@_@) " + (((float)cellTotal / (big_image_columns * big_image_rows)) * 100) + "%";
@@ -202,16 +192,13 @@ namespace SplitImage
                             }
                             else
                             {
-                                writer.Write(cell.ID.ToString() + " ");
-                                //MessageBox.Show(cell.ID.ToString());
-                                //File.WriteAllText(str_FolderDes + "\\" + "tile_map.txt", cell.ID.ToString());
+                                writer.Write(cell.ID.ToString() + " ");//ghi ID mới vào trong file text
                                 listCell.Add(cell);
                                 count_num += 1;
                                 cellTotal += 1;
                                 Console.WriteLine(count_num.ToString());
                                 lb_caution.Text = "Đang ghi file... (@_@) " + (((float)cellTotal / (big_image_columns * big_image_rows)) * 100) + "%";
-                                lb_caution.Refresh();
-                                Console.WriteLine("****************************" + cellTotal + (big_image_columns * big_image_rows));
+                                lb_caution.Refresh(); 
                             }
                         }
                     }
@@ -230,7 +217,7 @@ namespace SplitImage
                 //Tạo bitmap thể hiện cũa tileSet
                 Bitmap map_bitmap = new Bitmap(cell_size * grid_columns, cell_size * grid_rows);
                 Graphics g = Graphics.FromImage(map_bitmap);
-                //vòng lặp thứ hai ghi ảnh bitmap từng cell lên bitmap lớn
+                //vòng lặp ghi ảnh bitmap từng cell lên bitmap lớn
                 var count_nember = 0;
                 for(int i = 0; i <= grid_rows; i++)
                     for (int j = 0; j  < grid_columns; j++)
@@ -245,18 +232,22 @@ namespace SplitImage
                     }
 
                 map_bitmap.Save(str_FolderDes + "\\" + "tile_map.png");
-
-                //Them header
+                //=====================================
+                //Them header row, column cho file text
+                //=====================================
                 lb_caution.Text = "Reformat...";
                 lb_caution.Refresh();
 
+                //ghi nội dung file text vào data
                 string data = File.ReadAllText(str_FolderDes + "\\" + "tile_map.txt");
+                //thêm header cho data
                 string header_data = big_image_rows + " " + big_image_columns + "\n" + data;
-
+                //xóa nội dung trong file
                 File.WriteAllText(str_FolderDes + "\\" + "tile_map.txt", String.Empty);
+                //Ghi nội dung đã có header vào file text
                 File.WriteAllText(str_FolderDes + "\\" + "tile_map.txt", header_data);
-                //Bỏ qua các sự kiện khi bt_Export disable;
-                Application.DoEvents();
+                
+                Application.DoEvents();//Bỏ qua các sự kiện khi bt_Export disable;
                 bt_Export.Enabled = true;
                 Console.WriteLine(listCell.Count);
 
@@ -299,19 +290,7 @@ namespace SplitImage
                 return bitmap;
             }
         }
-
-        private void CreateFileText(string fileName)
-        {
-            if (File.Exists(fileName))
-            {
-                File.Delete(fileName);
-                
-            }
-
-            //Create new file
-            File.Create(fileName);
-        }
-        
+ 
         private void playMusicBg()
         {
             try
