@@ -32,9 +32,11 @@ namespace SplitImage
 
         private void form_SplitImage_Load(object sender, EventArgs e)
         {
+            pb_skull.Location = new Point(this.Width / 2 - pb_skull.Width / 2, pb_skull.Location.Y);
             //button
-            gb_Infor.Location = new Point(this.Width / 2 - gb_Infor.Width / 2, this.Height / 2 - gb_Infor.Height / 2 - 20);
+            gb_Infor.Location = new Point(this.Width / 2 - gb_Infor.Width / 2, this.Height / 2 - gb_Infor.Height / 2 + 20);
             bt_Export.Location = new Point(gb_Infor.Location.X + gb_Infor.Width / 2 - bt_Export.Width / 2, gb_Infor.Location.Y + gb_Infor.Height - bt_Export.Height / 2);
+
             tb__CellSize.ShortcutsEnabled = false;
             tb_numRows.ShortcutsEnabled = false;
 
@@ -143,21 +145,22 @@ namespace SplitImage
                 lb_caution.ForeColor = Color.Green;
 
                 bt_Export.Enabled = false;
-            
 
-                for (int i = 0; i < big_image_height; i = i + cell_size)
+                Bitmap transparentBmp = new Bitmap(cell_size, cell_size);
+
+                for (int i = 0; i < big_image_rows; i++)
                 {
                     if (i != 0)
                     {
                         writer.Write("\n");
                     }
-                    for (int j = 0; j < big_image_width; j = j + cell_size)
+                    for (int j = 0; j < big_image_columns; j++)
                     {
-                        Rectangle section = new Rectangle(new Point(j , i), new Size(cell_size, cell_size));
+                        Rectangle section = new Rectangle(new Point(j * cell_size, i *  cell_size), new Size(cell_size, cell_size));
                         Cell cell = new Cell();
                         cell.cell_Bitmap = CropImage(mainImage, section);
 
-                        if (CompareImage(cell.cell_Bitmap, new Bitmap(cell_size, cell_size)))
+                        if (CompareImage(cell.cell_Bitmap, transparentBmp))
                             cell.ID = 0;
                         else  
                             cell.ID = count_num;
@@ -168,7 +171,7 @@ namespace SplitImage
                             listCell.Add(cell);
                             writer.Write(cell.ID.ToString() + " ");
                             cellTotal += 1;
-                            if (!CompareImage(cell.cell_Bitmap, new Bitmap(cell_size, cell_size)))
+                            if (!CompareImage(cell.cell_Bitmap, transparentBmp))
                                 count_num += 1;
                         }
                         else
@@ -215,23 +218,29 @@ namespace SplitImage
                 var grid_columns = listCell.Count / num_rows + 1;
                 var grid_rows = num_rows;
                 //Tạo bitmap thể hiện cũa tileSet
-                Bitmap map_bitmap = new Bitmap(cell_size * grid_columns, cell_size * grid_rows);
-                Graphics g = Graphics.FromImage(map_bitmap);
-                //vòng lặp ghi ảnh bitmap từng cell lên bitmap lớn
-                var count_nember = 0;
-                for(int i = 0; i <= grid_rows; i++)
-                    for (int j = 0; j  < grid_columns; j++)
+                using (Bitmap map_bitmap = new Bitmap(cell_size * grid_columns, cell_size * grid_rows))
+                {
+                    using (Graphics g = Graphics.FromImage(map_bitmap))
                     {
-                        if (count_nember >= listCell.Count)
-                            break;
+                        //vòng lặp ghi ảnh bitmap từng cell lên bitmap lớn
+                        var count_nember = 0;
+                        for (int i = 0; i < grid_rows; i++)
+                            for (int j = 0; j < grid_columns; j++)
+                            {
+                                if (count_nember >= listCell.Count)
+                                    break;
 
-                        g.DrawImage(listCell[count_nember].cell_Bitmap, new Point(j * cell_size, i * cell_size));
-                        lb_caution.Text = "Đang vẽ hình... (!_!) " + (((float)count_nember / listCell.Count) * 100) + "%";
-                        lb_caution.Refresh();
-                        count_nember += 1;
+                                listCell[count_nember].cell_Bitmap.SetResolution(g.DpiX, g.DpiY);
+                                g.DrawImage(listCell[count_nember].cell_Bitmap, new Point(j * cell_size, i * cell_size));
+                                lb_caution.Text = "Đang vẽ hình... (!_!) " + (((float)count_nember / listCell.Count) * 100) + "%";
+                                lb_caution.Refresh();
+                                count_nember += 1;
+                            }
+                        g.Flush();
+                        map_bitmap.Save(str_FolderDes + "\\" + "tile_map.png", System.Drawing.Imaging.ImageFormat.Png);
+                        g.Dispose();
                     }
-
-                map_bitmap.Save(str_FolderDes + "\\" + "tile_map.png");
+                }
                 //=====================================
                 //Them header row, column cho file text
                 //=====================================
@@ -286,6 +295,7 @@ namespace SplitImage
             var bitmap = new Bitmap(section.Width, section.Height);
             using (var g = Graphics.FromImage(bitmap))
             {
+                src.SetResolution(g.DpiX, g.DpiY); //Giu cho anh chat luong goc
                 g.DrawImage(src, 0, 0, section, GraphicsUnit.Pixel);
                 return bitmap;
             }

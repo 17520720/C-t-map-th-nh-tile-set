@@ -44,7 +44,9 @@
             this.lb_caution = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.music_state = new System.Windows.Forms.Label();
+            this.pb_skull = new System.Windows.Forms.PictureBox();
             this.gb_Infor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_skull)).BeginInit();
             this.SuspendLayout();
             // 
             // bt_ChooseFile
@@ -124,9 +126,9 @@
             this.gb_Infor.Controls.Add(this.tb__CellSize);
             this.gb_Infor.Controls.Add(this.bt_ChooseFile);
             this.gb_Infor.ForeColor = System.Drawing.Color.Black;
-            this.gb_Infor.Location = new System.Drawing.Point(205, 103);
+            this.gb_Infor.Location = new System.Drawing.Point(206, 166);
             this.gb_Infor.Name = "gb_Infor";
-            this.gb_Infor.Size = new System.Drawing.Size(398, 214);
+            this.gb_Infor.Size = new System.Drawing.Size(399, 208);
             this.gb_Infor.TabIndex = 9;
             this.gb_Infor.TabStop = false;
             // 
@@ -160,7 +162,7 @@
             // 
             // bt_Export
             // 
-            this.bt_Export.Location = new System.Drawing.Point(378, 306);
+            this.bt_Export.Location = new System.Drawing.Point(373, 360);
             this.bt_Export.Name = "bt_Export";
             this.bt_Export.Size = new System.Drawing.Size(75, 23);
             this.bt_Export.TabIndex = 5;
@@ -189,6 +191,7 @@
             // music_state
             // 
             this.music_state.AutoSize = true;
+            this.music_state.Cursor = System.Windows.Forms.Cursors.Hand;
             this.music_state.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.music_state.Location = new System.Drawing.Point(741, 428);
             this.music_state.Name = "music_state";
@@ -196,6 +199,16 @@
             this.music_state.TabIndex = 12;
             this.music_state.Text = "label3";
             this.music_state.Click += new System.EventHandler(this.music_state_Click);
+            // 
+            // pb_skull
+            // 
+            this.pb_skull.Image = global::SplitImage.Properties.Resources.skull;
+            this.pb_skull.Location = new System.Drawing.Point(332, 10);
+            this.pb_skull.Name = "pb_skull";
+            this.pb_skull.Size = new System.Drawing.Size(150, 150);
+            this.pb_skull.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_skull.TabIndex = 13;
+            this.pb_skull.TabStop = false;
             // 
             // form_SplitImage
             // 
@@ -209,6 +222,7 @@
             this.Controls.Add(this.lb_caution);
             this.Controls.Add(this.bt_Export);
             this.Controls.Add(this.gb_Infor);
+            this.Controls.Add(this.pb_skull);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -217,6 +231,7 @@
             this.Load += new System.EventHandler(this.form_SplitImage_Load);
             this.gb_Infor.ResumeLayout(false);
             this.gb_Infor.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_skull)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,6 +253,7 @@
         private System.Windows.Forms.Label lb_caution;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label music_state;
+        private System.Windows.Forms.PictureBox pb_skull;
     }
 }
 
